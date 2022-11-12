@@ -1,4 +1,3 @@
-import React from 'react';
 import Views from './views';
 import store from './redux/store';
 import { Provider } from 'react-redux';
@@ -18,7 +17,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <ThemeSwitcherProvider themeMap={themes} defaultTheme={THEME_CONFIG.currentTheme} insertionPoint="styles-insertion-point">
-          <Router basename='/dashboard'>
+          <Router basename='/'>
             <Switch>
               <Route path="/" component={Views}/>
             </Switch>

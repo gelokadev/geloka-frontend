@@ -20,7 +20,7 @@ function* setAuthUser({ callback }) {
 		yield put(loginUserSuccess(authUserResponse));
 	} catch (e) {
 		if(!window.location.href.includes(AUTH_PREFIX_PATH))
-			window.location.replace("/dashboard"+AUTH.LOGIN);
+			window.location.replace(AUTH.LOGIN);
 	} finally {
 	  if (callback) callback();
 	}
@@ -31,7 +31,7 @@ export function* signOut() {
 		try {
 			localStorage.removeItem(AUTH_TOKEN);
 			if(!window.location.href.includes(AUTH_PREFIX_PATH))
-				window.location.replace("/dashboard"+AUTH.LOGIN);
+				window.location.replace(AUTH.LOGIN);
 		} catch (err) {
 			yield put(showAuthMessage(err));
 		}

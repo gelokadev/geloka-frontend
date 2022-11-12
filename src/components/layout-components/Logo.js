@@ -26,15 +26,15 @@ const getLogo = (props) => {
   const { navCollapsed, logoType } = props;
   if(logoType === 'light') {
     if(navCollapsed) {
-      return '/dashboard/img/logo-sm-white.png'
+      return '/img/logo-sm-white.png'
     }
-    return '/dashboard/img/logo-white.png'
+    return '/img/logo-white.png'
   }
 
   if (navCollapsed) {
-    return '/dashboard/img/logo-sm.png'
+    return '/img/logo-sm.png'
   }
-  return '/dashboard/img/logo.png'
+  return '/img/logo.png'
 }
 
 const getLogoDisplay = (isMobile, mobileLogo) => {

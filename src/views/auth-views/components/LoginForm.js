@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import { injectIntl } from 'react-intl';
+import { Form, Input, Alert } from "antd";
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import UserService from '../../../services/users';
-import { Button, Form, Input, Alert } from "antd";
 import { HOME } from '../../../constants/FrontendUrl';
 import { AUTH_TOKEN } from '../../../redux/constants/Auth';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import GKButton from '../../../components/shared-components/GKButton';
 
 export const LoginForm = (props) => {
 
@@ -79,9 +80,7 @@ export const LoginForm = (props) => {
 					<Input.Password placeholder={"Mot de passe"} label={"Mot de passe"} prefix={<LockOutlined className="text-primary" />}/>
 				</Form.Item>
 				<Form.Item>
-					<Button type="primary" htmlType="submit" block loading={loading}>
-						Me connecter
-					</Button>
+					<GKButton label='Me connecter' type="primary" loading={loading} />
 				</Form.Item>
 				{ extra }
 			</Form>

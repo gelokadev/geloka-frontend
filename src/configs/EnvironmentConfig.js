@@ -1,9 +1,5 @@
 const dev = {
-  API_ENDPOINT_URL: 'http://localhost:8080'
-};
-
-const prod = {
-  API_ENDPOINT_URL: 'https://connect.immersively.care/api'
+  API_ENDPOINT_URL: 'http://localhost:8090'
 };
 
 const getEnv = () => {
@@ -11,7 +7,7 @@ const getEnv = () => {
 		case 'development':
 			return dev
 		case 'production':
-			return prod
+			return dev
 		default:
 			break;
 	}

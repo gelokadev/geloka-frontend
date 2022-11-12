@@ -1,6 +1,6 @@
 {
   "name": "geloka",
-  "homepage": "https://geloka.com/dashboard",
+  "homepage": "https://geloka.com",
   "version": "2.1.5",
   "private": true,
   "dependencies": {

@@ -16,7 +16,7 @@ const initState = {
   loading: false,
   message: '',
   showMessage: false,
-  redirect: '/dashboard',
+  redirect: '/',
   token: localStorage.getItem(AUTH_TOKEN),
   user: null
 }
@@ -27,7 +27,7 @@ const auth = (state = initState, action) => {
 			return {
 				...state,
 				loading: false,
-				redirect: '/dashboard',
+				redirect: '/',
 				token: action.token
 			}
 		case SHOW_AUTH_MESSAGE: 
@@ -45,12 +45,12 @@ const auth = (state = initState, action) => {
 			}
 		case SIGNOUT_SUCCESS: {
 			localStorage.removeItem(AUTH_TOKEN);
-			window.location.replace("/dashboard"+AUTH.LOGIN);
+			window.location.replace("/"+AUTH.LOGIN);
 			return {
 				...state,
 				token: null,
 				user: null,
-				redirect: '/dashboard',
+				redirect: '/',
 				loading: false
 			}
 		}

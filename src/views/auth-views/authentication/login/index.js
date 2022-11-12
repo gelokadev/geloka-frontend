@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm';
 
 const backgroundStyle = {
-	backgroundImage: 'url(/dashboard/img/others/img-17.jpg)',
+	backgroundImage: 'url(/img/others/img-17.jpg)',
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: 'cover',
 	minHeight: '100%',
@@ -24,7 +24,7 @@ const LoginOne = props => {
 						<Card>
 							<div className="my-4">
 								<div className="text-center">
-									<img onClick={() => window.location.href = '/' } className="img-fluid cursor-pointer" src={`/dashboard/img/${theme === 'light' ? 'logo.png': 'logo-white.png'}`} alt="" width={'70%'} />
+									<img onClick={() => window.location.href = '/' } className="img-fluid cursor-pointer" src={`/img/${theme === 'light' ? 'logo.png': 'logo-white.png'}`} alt="" width={'70%'} />
 								</div>
 								<Row justify="center">
 									<Col xs={24} sm={24} md={20} lg={20}>

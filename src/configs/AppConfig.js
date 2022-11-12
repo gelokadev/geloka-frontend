@@ -1,7 +1,7 @@
 import { env } from './EnvironmentConfig';
 import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE, DIR_LTR } from '../constants/ThemeConstant';
 
-export const APP_NAME = 'Factory API';
+export const APP_NAME = 'Geloka API';
 export const API_BASE_URL = env.API_ENDPOINT_URL
 export const APP_PREFIX_PATH = '/app';
 export const ROOT = '/';
@@ -10,8 +10,8 @@ export const ADMIN_PREFIX_PATH = '/admin';
 export const ADMIN_ROLE = 'ADMIN';
 export const USER_ROLE = 'USER';
 export const OAUTH = {
-    clientId: 'factory-app',
-    clientSecret: 'kv:j-TjX95',
+    clientId: 'geloka-app',
+    clientSecret: 'geloka-secret',
     grantType: 'password',
 };
 
