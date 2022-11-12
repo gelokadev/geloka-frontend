@@ -1,9 +1,8 @@
+import React from 'react';
 import utils from '../../utils';
 import { Layout, Grid } from "antd";
 import { connect } from 'react-redux';
-import React, { useEffect } from 'react';
 import AppViews from '../../views/app-views';
-import { useHistory } from 'react-router-dom';
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import navigationConfig from "../../configs/NavigationConfig";
 import TopNav from '../../components/layout-components/TopNav';
@@ -13,25 +12,13 @@ import Loading from '../../components/shared-components/Loading';
 import MobileNav from '../../components/layout-components/MobileNav';
 import HeaderNav from '../../components/layout-components/HeaderNav';
 import PageHeader from '../../components/layout-components/PageHeader';
-import { USER_ROLE, ADMIN_PREFIX_PATH } from '../../configs/AppConfig';
 import {  SIDE_NAV_WIDTH, SIDE_NAV_COLLAPSED_WIDTH, NAV_TYPE_SIDE, 
   NAV_TYPE_TOP, DIR_RTL, DIR_LTR } from '../../constants/ThemeConstant';
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
 
-export const AppLayout = ({ navCollapsed, navType, location, direction, user }) => {
-
-	const history = useHistory();
-
-  useEffect(() => {
-    if(user) {
-      if(user?.role.toUpperCase() !== USER_ROLE) {
-        history.push(ADMIN_PREFIX_PATH);
-      }
-    }
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
 
   const currentRouteInfo = utils.getRouteInfo(navigationConfig, location.pathname)
   const screens = utils.getBreakPoint(useBreakpoint());

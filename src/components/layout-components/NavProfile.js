@@ -1,6 +1,7 @@
 import { Menu, Dropdown, Avatar } from "antd";
 import { USER_ROLE } from "../../configs/AppConfig";
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
+import UserService from "../../services/users";
 
 const menuItem = [
 	{
@@ -12,6 +13,12 @@ const menuItem = [
 ]
 
 export const NavProfile = (props) => {
+
+  const logoutUser = () => {
+    UserService.logout().finally(() => {
+      props.signOut();
+    });
+  }
 
   const profileImg = "https://robohash.org/23.238.193.4.png";
 
@@ -30,7 +37,7 @@ export const NavProfile = (props) => {
       </div>
       <div className="nav-profile-body">
         <Menu>
-          <Menu.Item key={menuItem.length + 1} onClick={() => props.signOut()}>
+          <Menu.Item key={menuItem.length + 1} onClick={() => logoutUser()}>
             <span>
               <LogoutOutlined />
               <span className="font-weight-normal">Déconnexion</span>

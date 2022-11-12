@@ -1,11 +1,9 @@
 import Logo from './Logo';
+import { Layout } from "antd";
 import utils from '../../utils'
-import { Layout, Switch } from "antd";
 import { connect } from "react-redux";
-// import { NavPanel } from './NavPanel';
 import { NavProfile } from "./NavProfile";
 import { signOut } from '../../redux/actions/Auth';
-import { useThemeSwitcher } from "react-css-theme-switcher";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from '../../constants/ThemeConstant';
 import { toggleCollapsedNav, onMobileNavToggle, onHeaderNavColorChange, onSwitchTheme } from '../../redux/actions/Theme';
@@ -15,9 +13,8 @@ const { Header } = Layout;
 export const HeaderNav = props => {
 
   const { signOut, user, navCollapsed, mobileNav, navType, headerNavColor, toggleCollapsedNav, 
-    onMobileNavToggle, isMobile, currentTheme, direction, onSwitchTheme } = props;
+    onMobileNavToggle, isMobile, currentTheme, direction } = props;
 
-  const { switcher, themes } = useThemeSwitcher();
 
   const onToggle = () => {
     if(!isMobile) {
@@ -26,13 +23,6 @@ export const HeaderNav = props => {
       onMobileNavToggle(!mobileNav)
     }
   }
-
-  const toggleTheme = (isChecked) => {
-		onHeaderNavColorChange('')
-		const changedTheme = isChecked ? 'dark' : 'light'
-		onSwitchTheme(changedTheme)
-    switcher({ theme: themes[changedTheme] });
-  };
 
   const isNavTop = navType === NAV_TYPE_TOP ? true : false
   const mode = ()=> {
@@ -71,12 +61,7 @@ export const HeaderNav = props => {
             </ul>
           </div>
           <div className="nav-right">
-            <div style={{ width: '150px' }}>
-              <img src={`/dashboard/img/others/${currentTheme === 'dark' ? 'moon' : 'sun'}.png`} alt='Theme icon' width={'25px'}/>
-              <Switch checked={currentTheme === 'dark'} onChange={toggleTheme} style={{ marginLeft: '10px' }}/>
-            </div>
             <NavProfile direction={direction} user={user} signOut={signOut}  />
-            {/* <NavPanel direction={direction} /> */}
           </div>
         </div>
       </div>

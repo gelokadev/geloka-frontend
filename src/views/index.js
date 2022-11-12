@@ -1,7 +1,7 @@
 import AppLocale from "../lang";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { ConfigProvider } from 'antd';
-import React, { useEffect } from "react";
 import { IntlProvider } from "react-intl";
 import AppLayout from "../layouts/app-layout";
 import AuthLayout from '../layouts/auth-layout';
@@ -22,7 +22,9 @@ export const Views = (props) => {
   const findLoggedUser = async () => {
     try {
       await props.setAuthUser((data) => { });
-    } catch (e) { }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -40,9 +42,6 @@ export const Views = (props) => {
           <Route path={APP_PREFIX_PATH}>
             <AppLayout direction={direction} location={location} />
           </Route>
-          {/* <Route path={ADMIN_PREFIX_PATH}>
-            <AdminLayout direction={direction} location={location} />
-          </Route> */}
         </Switch>
       </ConfigProvider>
     </IntlProvider>

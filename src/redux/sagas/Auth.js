@@ -1,3 +1,4 @@
+import User from '../../models/User';
 import fetch from '../../auth/FetchInterceptor';
 import { AUTH } from '../../constants/FrontendUrl';
 import * as UserRoutes from '../../services/users/routes';
@@ -17,7 +18,7 @@ const getAuthData = async () => {
 function* setAuthUser({ callback }) {
 	try {
 		const authUserResponse = yield call(getAuthData);
-		yield put(loginUserSuccess(authUserResponse));
+		yield put(loginUserSuccess(new User(authUserResponse)));
 	} catch (e) {
 		if(!window.location.href.includes(AUTH_PREFIX_PATH))
 			window.location.replace(AUTH.LOGIN);

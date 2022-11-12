@@ -4,6 +4,7 @@ import fetch from '../../auth/FetchInterceptor';
 import { OAUTH } from "../../configs/AppConfig";
 
 export default class UserService {
+
     static loginUserAccount(data) {
         let headers = Utils.getFullAuthorisationRequestConfig();
         data.client_id = OAUTH.clientId;
@@ -15,4 +16,12 @@ export default class UserService {
             data
         });
     }
+
+    static logout() {
+        return fetch({
+            url: Routes.LOGOUT,
+            method: 'delete'
+        });
+    }
+
 }
