@@ -1,3 +1,4 @@
+import React from 'react';
 import AppLocale from "../lang";
 import { useEffect } from "react";
 import { connect } from "react-redux";
@@ -21,7 +22,7 @@ export const Views = (props) => {
 
   const findLoggedUser = async () => {
     try {
-      await props.setAuthUser((data) => { });
+      await props.setAuthUser(() => { });
     } catch (e) {
       console.log(e);
     }
@@ -33,14 +34,14 @@ export const Views = (props) => {
       messages={currentAppLocale.messages}>
       <ConfigProvider locale={currentAppLocale.antd} direction={direction}>
         <Switch>
+          <Route path={APP_PREFIX_PATH}>
+            <AppLayout direction={direction} location={location} />
+          </Route>
           <Route exact path={ROOT}>
             <AuthLayout direction={direction} />
           </Route>
           <Route path={AUTH_PREFIX_PATH}>
             <AuthLayout direction={direction} />
-          </Route>
-          <Route path={APP_PREFIX_PATH}>
-            <AppLayout direction={direction} location={location} />
           </Route>
         </Switch>
       </ConfigProvider>

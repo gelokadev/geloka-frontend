@@ -1,3 +1,4 @@
+import React from 'react';
 import Logo from "./Logo";
 import { Drawer } from "antd";
 import { connect } from "react-redux";

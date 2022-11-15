@@ -4,7 +4,6 @@ import { Layout, Grid } from "antd";
 import { connect } from 'react-redux';
 import AppViews from '../../views/app-views';
 import { useThemeSwitcher } from "react-css-theme-switcher";
-import navigationConfig from "../../configs/NavigationConfig";
 import TopNav from '../../components/layout-components/TopNav';
 import Footer from '../../components/layout-components/Footer';
 import SideNav from '../../components/layout-components/SideNav';
@@ -14,13 +13,14 @@ import HeaderNav from '../../components/layout-components/HeaderNav';
 import PageHeader from '../../components/layout-components/PageHeader';
 import {  SIDE_NAV_WIDTH, SIDE_NAV_COLLAPSED_WIDTH, NAV_TYPE_SIDE, 
   NAV_TYPE_TOP, DIR_RTL, DIR_LTR } from '../../constants/ThemeConstant';
+import { adminNavTree, agentNavTree } from "../../configs/NavigationConfig";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
 
-export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
+export const AppLayout = ({ navCollapsed, navType, location, direction, user }) => {
 
-  const currentRouteInfo = utils.getRouteInfo(navigationConfig, location.pathname)
+  const currentRouteInfo = utils.getRouteInfo([...adminNavTree, ...agentNavTree], location.pathname)
   const screens = utils.getBreakPoint(useBreakpoint());
   const isMobile = !screens.includes('lg')
   const isNavSide = navType === NAV_TYPE_SIDE

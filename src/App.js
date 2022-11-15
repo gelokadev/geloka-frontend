@@ -1,3 +1,4 @@
+import React from 'react';
 import Views from './views';
 import store from './redux/store';
 import { Provider } from 'react-redux';

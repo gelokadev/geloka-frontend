@@ -45,7 +45,7 @@ const auth = (state = initState, action) => {
 			}
 		case SIGNOUT_SUCCESS: {
 			localStorage.removeItem(AUTH_TOKEN);
-			window.location.replace("/"+AUTH.LOGIN);
+			window.location.replace(AUTH.LOGIN);
 			return {
 				...state,
 				token: null,

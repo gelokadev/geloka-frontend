@@ -1,11 +1,13 @@
+import React from 'react';
 import utils from '../../utils';
 import { Menu, Grid } from "antd";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Icon from "../util-components/Icon";
+import UserService from '../../services/users';
 import { signOut } from '../../redux/actions/Auth';
 import { onMobileNavToggle } from "../../redux/actions/Theme";
-import navigationConfig from "../../configs/NavigationConfig";
+import { adminNavTree, agentNavTree } from "../../configs/NavigationConfig";
 import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from "../../constants/ThemeConstant";
 
 const { SubMenu } = Menu;
@@ -26,7 +28,9 @@ const setDefaultOpen = (key) => {
 };
 
 const SideNavContent = (props) => {
+
 	const { sideNavTheme, routeInfo, hideGroupTitle, onMobileNavToggle, user } = props;
+
 	const isMobile = !utils.getBreakPoint(useBreakpoint()).includes('lg')
 	const closeMobileNav = () => {
 		if (isMobile) {
@@ -34,14 +38,31 @@ const SideNavContent = (props) => {
 		}
 	}
 
+  const logoutUser = () => {
+    UserService.logout().finally(() => {
+      props.signOut();
+    });
+  }
+
   const actions = (type) => {
     switch (type) {
       case "logout":
-          props.signOut();
+          logoutUser();
         break;
     
       default:
         break;
+    }
+  }
+
+  const getMenus = () => {
+    switch (user?.role) {
+      case 'ADMIN':
+        return adminNavTree;
+      case 'AGENT':
+        return agentNavTree;
+      default:
+        return [];
     }
   }
 
@@ -54,14 +75,14 @@ const SideNavContent = (props) => {
       defaultOpenKeys={setDefaultOpen(routeInfo?.key)}
       className={hideGroupTitle ? "hide-group-title" : ""}
     >
-      {navigationConfig.filter(navConfig => navConfig.role.toUpperCase() === user?.role.toUpperCase()).map((menu) =>
-        menu.submenu.length > 0 ? (
+      {getMenus().map((menu) =>
+        menu.submenu ? (
           <Menu.ItemGroup
             key={menu.key}
             title={menu.title}
           >
             {menu.submenu.map((subMenuFirst) =>
-              subMenuFirst.submenu.length > 0 ? (
+              subMenuFirst.submenu ? (
                 <SubMenu
                   icon={
                     subMenuFirst.icon ? (
@@ -107,11 +128,24 @@ const SideNavContent = (props) => {
 };
 
 const TopNavContent = (props) => {
+
   const { topNavColor, user } = props;
+
+  const getMenus = () => {
+    switch (user?.role) {
+      case 'ADMIN':
+        return adminNavTree;
+      case 'AGENT':
+        return agentNavTree;
+      default:
+        return [];
+    }
+  }
+
   return (
     <Menu mode="horizontal" style={{ backgroundColor: topNavColor }}>
-      {navigationConfig.filter(navConfig => navConfig.role.toUpperCase() === user?.role.toUpperCase()).map((menu) =>
-        menu.submenu.length > 0 ? (
+      {getMenus().map((menu) =>
+        menu.submenu ? (
           <SubMenu
             key={menu.key}
             popupClassName="top-nav-menu"
@@ -123,7 +157,7 @@ const TopNavContent = (props) => {
             }
           >
             {menu.submenu.map((subMenuFirst) =>
-              subMenuFirst.submenu.length > 0 ? (
+              subMenuFirst.submenu ? (
                 <SubMenu
                   key={subMenuFirst.key}
                   popupClassName="top-nav-menu"

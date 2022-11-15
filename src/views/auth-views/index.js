@@ -1,3 +1,4 @@
+import React from 'react';
 import { lazy, Suspense } from "react";
 import { AUTH } from '../../constants/FrontendUrl';
 import { Switch, Route, Redirect } from "react-router-dom";

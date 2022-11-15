@@ -1,7 +1,8 @@
+import React from 'react';
 import { Menu, Dropdown, Avatar } from "antd";
+import UserService from "../../services/users";
 import { USER_ROLE } from "../../configs/AppConfig";
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
-import UserService from "../../services/users";
 
 const menuItem = [
 	{

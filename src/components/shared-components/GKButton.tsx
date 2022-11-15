@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from "antd";
 import { CSSProperties } from 'react';
 
@@ -12,8 +13,6 @@ type Props = {
 const GKButton = (props: Props) => {
 
 	const {loading, label, style, onClick, type} = props;
-
-    console.log("PROPS => ", props);
 
 	return (
         <Button type={type} block loading={loading} style={style} onClick={onClick}  htmlType="submit">

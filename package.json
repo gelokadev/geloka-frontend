@@ -7,10 +7,11 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^29.2.2",
+    "@types/jest": "^29.2.3",
     "@types/node": "^18.11.9",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.1",
+    "@types/react-router-dom": "^5.2.0",
     "@vx/pattern": "0.0.199",
     "antd": "4.17.3",
     "apexcharts": "^3.23.0",
@@ -52,7 +53,7 @@
     "react-resizable": "^1.11.0",
     "react-resize-detector": "^6.6.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
+    "react-scripts": "3.4.4",
     "react-simple-maps": "^2.3.0",
     "react-sticky": "^6.0.3",
     "react-syntax-highlighter": "^15.4.3",
@@ -68,7 +69,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "CHOKIDAR_USEPOLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -101,5 +102,11 @@
     "gulp-less": "^4.0.1",
     "gulp-postcss": "^8.0.0",
     "less-plugin-npm-import": "^2.1.0"
+  },
+  "optionalDependencies": {
+    "@types/react": "^17.0.1"
+  },
+  "resolutions": {
+    "@types/react": "17.0.1"
   }
 }
