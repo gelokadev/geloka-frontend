@@ -6,6 +6,7 @@ export const Commodities = () => {
   return (
     <Switch>
       <Route path={HOUSE.COMMODITY.LIST} component={lazy(() => import(`./list`))} />
+      <Route path={HOUSE.COMMODITY.CREATE} component={lazy(() => import(`./create`))} />
       <Redirect to={HOUSE.COMMODITY.LIST} />
     </Switch>
   )

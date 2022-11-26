@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { useRef, useEffect, useState} from 'react';
@@ -16,7 +17,7 @@ export const PageHeaderAlt = ({children, background, className, overlap, navType
 	}, [navType]);
 	
 	const getStyle = () => {
-		let style = { backgroundImage: background ? `url(${background})` : 'none' } 
+		let style = { backgroundImage: background ? `url(${background})` : 'none', marginBottom: 20, paddingTop: 10, paddingBottom: 10 } 
 		if (navType === NAV_TYPE_TOP) {
 			style.marginRight = -widthOffset
 			style.marginLeft = -widthOffset
