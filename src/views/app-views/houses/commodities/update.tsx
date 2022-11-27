@@ -1,19 +1,19 @@
 
 import { injectIntl } from 'react-intl';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import allIconsPack from '../../../../datas/icons';
+import { useHistory, useParams } from 'react-router-dom';
 import { HOUSE } from '../../../../constants/FrontendUrl';
 import Flex from '../../../../components/shared-components/Flex';
 import { Input, Select, Row, Col, Card, Form, message } from 'antd';
 import CommodityService from '../../../../services/houses/commodities';
 import GKButton from "../../../../components/shared-components/GKButton";
-import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 import CommodityCategory from '../../../../models/house/CommodityCategory';
+import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 
 const { Option, OptGroup } = Select
 
-const Create = (props: any) => {
+const Update = () => {
 
 	const rules = {
 		name: [
@@ -44,10 +44,12 @@ const Create = (props: any) => {
 
 	let history = useHistory();
 	const [form] = Form.useForm();
+	const { reference }: any = useParams();
 	const [submitLoading, setSubmitLoading] = useState(false);
 	const [categories, setCategories] = useState<CommodityCategory[]>([]);
 
 	useEffect(() => {
+		findData();
     	getCategories();
   	}, []);
 
@@ -59,10 +61,24 @@ const Create = (props: any) => {
     	});
   	};
 
+	const findData = () => {
+		CommodityService.findCommodity(reference).then((response) => {
+			form.setFieldsValue({
+				name: response.data.name,
+				icon: response.data.icon,
+				french: response.data.french,
+				english: response.data.english,
+				category_reference: response.data.commodityCategory.reference
+			});
+		}).catch(() => {
+			history.push(HOUSE.COMMODITY.CATEGORY.LIST);
+		})
+	};
+
 	const onFinish = () => {
 		setSubmitLoading(true)
 		form.validateFields().then(values => {
-			CommodityService.createCommodity(values).then(() => {
+			CommodityService.updateCommodity(reference, values).then(() => {
 				history.push(HOUSE.COMMODITY.LIST);
 			}).finally(() => {
 				setSubmitLoading(false);
@@ -77,7 +93,7 @@ const Create = (props: any) => {
 		<React.Fragment>
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
-					<h2>Créer une nouvelle commodité</h2>
+					<h2>Editer la commodité</h2>
 				</Flex>
 			</PageHeaderAlt>
 			<Form
@@ -136,4 +152,4 @@ const Create = (props: any) => {
 	)
 }
 
-export default injectIntl(Create);
+export default injectIntl(Update);

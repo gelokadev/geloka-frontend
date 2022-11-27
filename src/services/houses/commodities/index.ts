@@ -13,7 +13,7 @@ export default class CommodityService {
         });
     }
 
-    static findCommodities(reference: string): AxiosPromise<Commodity> {
+    static findCommodity(reference: string): AxiosPromise<Commodity> {
         return fetch({
             url: Routes.FIND_COMMODITY(reference),
             method: 'get'
@@ -24,7 +24,7 @@ export default class CommodityService {
         return fetch({
             data,
             method: 'post',
-            url: Routes.CREATE_CATEGORY,
+            url: Routes.CREATE_COMMODITY,
         });
     }
 

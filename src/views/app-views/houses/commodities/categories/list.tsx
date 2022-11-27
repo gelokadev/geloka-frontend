@@ -16,10 +16,10 @@ export const List = () => {
   	const [datas, setDatas] = useState<CommodityCategory[]>([]);
 
   	useEffect(() => {
-    	getCommodities();
+    	getCategories();
   	}, []);
 
-  	const getCommodities = () => {
+  	const getCategories = () => {
     	CommodityService.getCategories().then(response => {
 			setDatas(response.data.map(elt => new CommodityCategory(elt)));
     	}).finally(() => {
@@ -106,7 +106,7 @@ export const List = () => {
 							Ajouter une entrée
 						</Button>
 						<div className="mr-md-3 mb-3 ml-3">
-							<Input placeholder='Recherchez une commodité' prefix={<SearchOutlined />} onChange={e => setSearch(e.target.value)} />
+							<Input placeholder='Recherchez une catégorie' prefix={<SearchOutlined />} onChange={e => setSearch(e.target.value)} />
 						</div>
 					</Flex>
 				</Flex>

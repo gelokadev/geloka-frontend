@@ -7,12 +7,12 @@ import Commodity from '../../../../models/house/Commodity';
 import Flex from '../../../../components/shared-components/Flex';
 import CommodityService from '../../../../services/houses/commodities';
 import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
-import { convertDate } from '../../../../datas/helper';
 
 export const List = () => {
 
 	let history = useHistory();
 
+	const [search, setSearch] = useState<String>('');
   	const [datas, setDatas] = useState<Commodity[]>([]);
 
   	useEffect(() => {
@@ -21,16 +21,11 @@ export const List = () => {
 
   	const getCommodities = () => {
     	CommodityService.getCommodities().then(response => {
-			setDatas(response.data);
+			setDatas(response.data.map(elt => new Commodity(elt)));
     	}).finally(() => {
 
     	});
   	};
-
-	const onSearch = (e: any) => {
-		// const value = e.currentTarget.value;
-		// const searchArray = e.currentTarget.value ? [] : [];
-	}
 
   	const columns = [
 		{
@@ -83,7 +78,7 @@ export const List = () => {
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.createdAt}</p>
+						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.getParsedDate()}</p>
 					</div>
 				</div>
 			)
@@ -94,7 +89,12 @@ export const List = () => {
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{convertDate(elm.createdAt)}</p>
+						<Button
+							type="primary"
+							onClick={() => history.push(HOUSE.COMMODITY.UPDATE.replace(':reference', elm.reference))}
+						>
+							Editer
+						</Button>
 					</div>
 				</div>
 			)
@@ -117,15 +117,15 @@ export const List = () => {
 							Ajouter une entrée
 						</Button>
 						<div className="mr-md-3 mb-3 ml-3">
-							<Input placeholder='Recherchez une commodité' prefix={<SearchOutlined />} onChange={e => onSearch(e)} />
+							<Input placeholder='Recherchez une commodité' prefix={<SearchOutlined />} onChange={e => setSearch(e.target.value)} />
 						</div>
 					</Flex>
 				</Flex>
 				<div className="table-responsive">
 					<Table
 						rowKey='id'
-						dataSource={datas}
 						columns={columns}
+						dataSource={datas.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))}
 					/>
 				</div>
 			</Card>

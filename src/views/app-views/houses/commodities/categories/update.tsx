@@ -33,8 +33,8 @@ const Update = () => {
 	}
 
 	let history = useHistory();
-	const { reference }: any = useParams();
 	const [form] = Form.useForm();
+	const { reference }: any = useParams();
 	const [submitLoading, setSubmitLoading] = useState(false);
 
 	useEffect(() => {
