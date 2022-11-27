@@ -12,7 +12,21 @@ export const adminNavTree = [{
       key: 'commodities',
       title: 'Commodités',
       icon: AppstoreOutlined,
-      path: FrontEndUrl.HOUSE.COMMODITY.SELF,
+      submenu: [
+        {
+          breadcrumb: false,
+          title: 'Catégories',
+          actionType: 'START_SESSION',
+          key: 'commoditiy-categories',
+          path: FrontEndUrl.HOUSE.COMMODITY.CATEGORY.LIST,
+        },
+        {
+          breadcrumb: false,
+          title: 'Commodités',
+          key: 'commodity-self',
+          path: FrontEndUrl.HOUSE.COMMODITY.LIST
+        },
+      ]
     },
   ]
 }, {

@@ -2,41 +2,36 @@ import { useHistory } from 'react-router-dom';
 import { Card, Input, Table, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { HOUSE } from '../../../../constants/FrontendUrl';
-import Commodity from '../../../../models/house/Commodity';
-import Flex from '../../../../components/shared-components/Flex';
-import CommodityService from '../../../../services/houses/commodities';
-import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
-import { convertDate } from '../../../../datas/helper';
+import { HOUSE } from '../../../../../constants/FrontendUrl';
+import Flex from '../../../../../components/shared-components/Flex';
+import CommodityService from '../../../../../services/houses/commodities';
+import CommodityCategory from '../../../../../models/house/CommodityCategory';
+import PageHeaderAlt from '../../../../../components/layout-components/PageHeaderAlt';
 
 export const List = () => {
 
 	let history = useHistory();
 
-  	const [datas, setDatas] = useState<Commodity[]>([]);
+	const [search, setSearch] = useState<String>('');
+  	const [datas, setDatas] = useState<CommodityCategory[]>([]);
 
   	useEffect(() => {
     	getCommodities();
   	}, []);
 
   	const getCommodities = () => {
-    	CommodityService.getCommodities().then(response => {
-			setDatas(response.data);
+    	CommodityService.getCategories().then(response => {
+			setDatas(response.data.map(elt => new CommodityCategory(elt)));
     	}).finally(() => {
 
     	});
   	};
 
-	const onSearch = (e: any) => {
-		// const value = e.currentTarget.value;
-		// const searchArray = e.currentTarget.value ? [] : [];
-	}
-
   	const columns = [
 		{
 			title: "Nom par défaut",
 			dataIndex: 'title',
-			render: (__: any, elm: Commodity) => (
+			render: (__: any, elm: CommodityCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
 						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.name}</p>
@@ -47,7 +42,7 @@ export const List = () => {
 		{
 			title: "Français",
 			dataIndex: 'startAt',
-			render: (__: any, elm: Commodity) => (
+			render: (__: any, elm: CommodityCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
 						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.french}</p>
@@ -58,7 +53,7 @@ export const List = () => {
 		{
 			title: "Anglais",
 			dataIndex: 'startAt',
-			render: (__: any, elm: Commodity) => (
+			render: (__: any, elm: CommodityCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
 						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.english}</p>
@@ -67,23 +62,12 @@ export const List = () => {
 			)
 		},
 		{
-			title: "Icône",
-			dataIndex: 'endAt',
-			render: (__: any, elm: Commodity) => (
-				<div className="d-flex">
-					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.icon}</p>
-					</div>
-				</div>
-			)
-		},
-		{
 			title: "Date de création",
 			dataIndex: 'timezone',
-			render: (__: any, elm: Commodity) => (
+			render: (__: any, elm: CommodityCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.createdAt}</p>
+						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.getParsedDate()}</p>
 					</div>
 				</div>
 			)
@@ -91,10 +75,15 @@ export const List = () => {
 		{
 			title: "Actions",
 			dataIndex: 'meetingType',
-			render: (__: any, elm: Commodity) => (
+			render: (__: any, elm: CommodityCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{convertDate(elm.createdAt)}</p>
+						<Button
+							type="primary"
+							onClick={() => history.push(HOUSE.COMMODITY.CATEGORY.UPDATE.replace(':reference', elm.reference))}
+						>
+							Editer
+						</Button>
 					</div>
 				</div>
 			)
@@ -105,27 +94,27 @@ export const List = () => {
 		<React.Fragment>
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
-					<h2>Liste des commodités</h2>
+					<h2>Liste des catégories</h2>
 				</Flex>
 			</PageHeaderAlt>	
 			<Card>
 				<Flex alignItems="center" justifyContent="between" mobileFlex={false}>
 					<Flex className="mb-1" mobileFlex={false}>
 						<Button type="primary" onClick={() => {
-							history.push(HOUSE.COMMODITY.CREATE);
+							history.push(HOUSE.COMMODITY.CATEGORY.CREATE);
 						}}>
 							Ajouter une entrée
 						</Button>
 						<div className="mr-md-3 mb-3 ml-3">
-							<Input placeholder='Recherchez une commodité' prefix={<SearchOutlined />} onChange={e => onSearch(e)} />
+							<Input placeholder='Recherchez une commodité' prefix={<SearchOutlined />} onChange={e => setSearch(e.target.value)} />
 						</div>
 					</Flex>
 				</Flex>
 				<div className="table-responsive">
 					<Table
 						rowKey='id'
-						dataSource={datas}
 						columns={columns}
+						dataSource={datas.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))}
 					/>
 				</div>
 			</Card>

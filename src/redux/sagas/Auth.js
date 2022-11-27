@@ -18,7 +18,7 @@ const getAuthData = async () => {
 function* setAuthUser({ callback }) {
 	try {
 		const authUserResponse = yield call(getAuthData);
-		yield put(loginUserSuccess(new User(authUserResponse)));
+		yield put(loginUserSuccess(new User(authUserResponse.data)));
 	} catch (e) {
 		if(!window.location.href.includes(AUTH_PREFIX_PATH))
 			window.location.replace(AUTH.LOGIN);

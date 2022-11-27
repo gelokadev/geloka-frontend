@@ -37,7 +37,7 @@ const Login = (props) => {
 	const onLogin = values => {
 		setLoading(true);
 		UserService.loginUserAccount(values).then(response => {
-			localStorage.setItem(AUTH_TOKEN, response.access_token);
+			localStorage.setItem(AUTH_TOKEN, response.data.access_token);
 			history.push(HOME);
 		}).catch(err => {
 			console.log(err);

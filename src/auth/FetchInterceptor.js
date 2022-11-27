@@ -62,7 +62,7 @@ service.interceptors.request.use(config => {
 
 // API respone interceptor
 service.interceptors.response.use( (response) => {
-	return response.data
+	return response
 }, (error) => {
 
 	let notificationParam = {
