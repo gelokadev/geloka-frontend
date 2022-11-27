@@ -30,7 +30,7 @@ export const List = () => {
   	const columns = [
 		{
 			title: "Nom par défaut",
-			dataIndex: 'title',
+			dataIndex: 'name',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
@@ -41,7 +41,7 @@ export const List = () => {
 		},
 		{
 			title: "Français",
-			dataIndex: 'startAt',
+			dataIndex: 'french',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
@@ -52,7 +52,7 @@ export const List = () => {
 		},
 		{
 			title: "Anglais",
-			dataIndex: 'startAt',
+			dataIndex: 'english',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
@@ -63,7 +63,7 @@ export const List = () => {
 		},
 		{
 			title: "Icône",
-			dataIndex: 'endAt',
+			dataIndex: 'icon',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
@@ -74,7 +74,7 @@ export const List = () => {
 		},
 		{
 			title: "Date de création",
-			dataIndex: 'timezone',
+			dataIndex: 'createdAt',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>
@@ -85,7 +85,6 @@ export const List = () => {
 		},
 		{
 			title: "Actions",
-			dataIndex: 'meetingType',
 			render: (__: any, elm: Commodity) => (
 				<div className="d-flex">
 					<div className='ml-3'>

@@ -24,5 +24,11 @@ export const HOUSE = {
             CREATE: `${APP_PREFIX_PATH}/commodities/category/create`,
             UPDATE: `${APP_PREFIX_PATH}/commodities/category/:reference/update`,
         }
+    },
+    CATEGORY: {
+        SELF: `${APP_PREFIX_PATH}/categories`,
+        LIST: `${APP_PREFIX_PATH}/categories/list`,
+        CREATE: `${APP_PREFIX_PATH}/categories/create`,
+        UPDATE: `${APP_PREFIX_PATH}/categories/:reference/update`,
     }
 }

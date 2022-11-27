@@ -2,26 +2,27 @@ import { useHistory } from 'react-router-dom';
 import { Card, Input, Table, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { HOUSE } from '../../../../../constants/FrontendUrl';
-import Flex from '../../../../../components/shared-components/Flex';
-import CommodityService from '../../../../../services/houses/commodities';
-import CommodityCategory from '../../../../../models/house/CommodityCategory';
-import PageHeaderAlt from '../../../../../components/layout-components/PageHeaderAlt';
+import { HOUSE } from '../../../../constants/FrontendUrl';
+import Commodity from '../../../../models/house/Commodity';
+import HouseCategory from '../../../../models/house/Category';
+import Flex from '../../../../components/shared-components/Flex';
+import HouseCategoryService from '../../../../services/houses/category';
+import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 
 export const List = () => {
 
 	let history = useHistory();
 
 	const [search, setSearch] = useState<String>('');
-  	const [datas, setDatas] = useState<CommodityCategory[]>([]);
+  	const [datas, setDatas] = useState<HouseCategory[]>([]);
 
   	useEffect(() => {
-    	getCategories();
+    	getCommodities();
   	}, []);
 
-  	const getCategories = () => {
-    	CommodityService.getCategories().then(response => {
-			setDatas(response.data.map(elt => new CommodityCategory(elt)));
+  	const getCommodities = () => {
+    	HouseCategoryService.getCategories().then(response => {
+			setDatas(response.data.map(elt => new HouseCategory(elt)));
     	}).finally(() => {
 
     	});
@@ -30,33 +31,22 @@ export const List = () => {
   	const columns = [
 		{
 			title: "Nom par défaut",
-			dataIndex: 'name',
-			render: (__: any, elm: CommodityCategory) => (
+			dataIndex: 'title',
+			render: (__: any, elm: HouseCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.name}</p>
+						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.title}</p>
 					</div>
 				</div>
 			)
 		},
 		{
-			title: "Français",
-			dataIndex: 'french',
-			render: (__: any, elm: CommodityCategory) => (
+			title: "Description",
+			dataIndex: 'description',
+			render: (__: any, elm: HouseCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.french}</p>
-					</div>
-				</div>
-			)
-		},
-		{
-			title: "Anglais",
-			dataIndex: 'english',
-			render: (__: any, elm: CommodityCategory) => (
-				<div className="d-flex">
-					<div className='ml-3'>
-						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.english}</p>
+						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.description.slice(0, 100)}</p>
 					</div>
 				</div>
 			)
@@ -64,7 +54,7 @@ export const List = () => {
 		{
 			title: "Date de création",
 			dataIndex: 'createdAt',
-			render: (__: any, elm: CommodityCategory) => (
+			render: (__: any, elm: HouseCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
 						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.getParsedDate()}</p>
@@ -74,12 +64,12 @@ export const List = () => {
 		},
 		{
 			title: "Actions",
-			render: (__: any, elm: CommodityCategory) => (
+			render: (__: any, elm: HouseCategory) => (
 				<div className="d-flex">
 					<div className='ml-3'>
 						<Button
 							type="primary"
-							onClick={() => history.push(HOUSE.COMMODITY.CATEGORY.UPDATE.replace(':reference', elm.reference))}
+							onClick={() => history.push(HOUSE.CATEGORY.UPDATE.replace(':reference', elm.reference))}
 						>
 							Editer
 						</Button>
@@ -100,7 +90,7 @@ export const List = () => {
 				<Flex alignItems="center" justifyContent="between" mobileFlex={false}>
 					<Flex className="mb-1" mobileFlex={false}>
 						<Button type="primary" onClick={() => {
-							history.push(HOUSE.COMMODITY.CATEGORY.CREATE);
+							history.push(HOUSE.CATEGORY.CREATE);
 						}}>
 							Ajouter une entrée
 						</Button>
@@ -113,7 +103,7 @@ export const List = () => {
 					<Table
 						rowKey='id'
 						columns={columns}
-						dataSource={datas.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))}
+						dataSource={datas.filter(d => d.title.toLowerCase().includes(search.toLowerCase()))}
 					/>
 				</div>
 			</Card>

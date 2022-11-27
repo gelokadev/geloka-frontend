@@ -16,7 +16,6 @@ export const adminNavTree = [{
         {
           breadcrumb: false,
           title: 'Catégories',
-          actionType: 'START_SESSION',
           key: 'commoditiy-categories',
           path: FrontEndUrl.HOUSE.COMMODITY.CATEGORY.LIST,
         },
@@ -27,6 +26,13 @@ export const adminNavTree = [{
           path: FrontEndUrl.HOUSE.COMMODITY.LIST
         },
       ]
+    },
+    {
+      breadcrumb: false,
+      title: 'Catégories',
+      key: 'categories',
+      icon: AppstoreOutlined,
+      path: FrontEndUrl.HOUSE.CATEGORY.LIST,
     },
   ]
 }, {
