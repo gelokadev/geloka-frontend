@@ -10,6 +10,7 @@ export default class User implements IUser {
     createdAt: string;
     email: string;
     firstName: string;
+    fullName: string;
     id: number;
     lastName: string;
     otp: string;
@@ -26,6 +27,7 @@ export default class User implements IUser {
         this.firstName = data.firstName;
         this.id = data.id;
         this.lastName = data.lastName;
+        this.fullName = data.fullName;
         this.otp = data.otp;
         this.telephone = data.telephone;
         this.address = data.address;
@@ -66,6 +68,7 @@ export interface IUser {
     lastName: string;
     otp: string;
     telephone: string;
+    fullName: string;
     address: string;
     updatedAt: string;
     emailVerified: boolean

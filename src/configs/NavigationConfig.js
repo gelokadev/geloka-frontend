@@ -34,6 +34,13 @@ export const adminNavTree = [{
       icon: AppstoreOutlined,
       path: FrontEndUrl.HOUSE.CATEGORY.LIST,
     },
+    {
+      breadcrumb: false,
+      title: 'Bailleurs',
+      key: 'lessors',
+      icon: AppstoreOutlined,
+      path: FrontEndUrl.USER.LESSOR.LIST,
+    },
   ]
 }, {
   key: 'general',

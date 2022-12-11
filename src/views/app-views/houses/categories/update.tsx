@@ -1,18 +1,13 @@
 
 import { injectIntl } from 'react-intl';
 import React, { useEffect, useState } from 'react';
-import allIconsPack from '../../../../datas/icons';
 import { useHistory, useParams } from 'react-router-dom';
 import { HOUSE } from '../../../../constants/FrontendUrl';
+import { Input, Row, Col, Card, Form, message } from 'antd';
 import Flex from '../../../../components/shared-components/Flex';
-import { Input, Select, Row, Col, Card, Form, message } from 'antd';
-import CommodityService from '../../../../services/houses/commodities';
-import GKButton from "../../../../components/shared-components/GKButton";
-import CommodityCategory from '../../../../models/house/CommodityCategory';
-import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 import HouseCategoryService from '../../../../services/houses/category';
-
-const { Option, OptGroup } = Select
+import GKButton from "../../../../components/shared-components/GKButton";
+import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 
 const Update = () => {
 

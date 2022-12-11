@@ -14,21 +14,29 @@ export const AUTH = {
 export const HOUSE = {         
     SELF: `${APP_PREFIX_PATH}/houses`,
     COMMODITY: {
-        SELF: `${APP_PREFIX_PATH}/commodities`,
-        LIST: `${APP_PREFIX_PATH}/commodities/list`,
-        CREATE: `${APP_PREFIX_PATH}/commodities/create`,
-        UPDATE: `${APP_PREFIX_PATH}/commodities/:reference/update`,
+        SELF: `${APP_PREFIX_PATH}/houses/commodities`,
+        LIST: `${APP_PREFIX_PATH}/houses/commodities/list`,
+        CREATE: `${APP_PREFIX_PATH}/houses/commodities/create`,
+        UPDATE: `${APP_PREFIX_PATH}/houses/commodities/:reference/update`,
         CATEGORY: {
-            SELF: `${APP_PREFIX_PATH}/commodities/category`,
-            LIST: `${APP_PREFIX_PATH}/commodities/category/list`,
-            CREATE: `${APP_PREFIX_PATH}/commodities/category/create`,
-            UPDATE: `${APP_PREFIX_PATH}/commodities/category/:reference/update`,
+            SELF: `${APP_PREFIX_PATH}/houses/commodities/category`,
+            LIST: `${APP_PREFIX_PATH}/houses/commodities/category/list`,
+            CREATE: `${APP_PREFIX_PATH}/houses/commodities/category/create`,
+            UPDATE: `${APP_PREFIX_PATH}/houses/commodities/category/:reference/update`,
         }
     },
     CATEGORY: {
-        SELF: `${APP_PREFIX_PATH}/categories`,
-        LIST: `${APP_PREFIX_PATH}/categories/list`,
-        CREATE: `${APP_PREFIX_PATH}/categories/create`,
-        UPDATE: `${APP_PREFIX_PATH}/categories/:reference/update`,
+        SELF: `${APP_PREFIX_PATH}/houses/categories`,
+        LIST: `${APP_PREFIX_PATH}/houses/categories/list`,
+        CREATE: `${APP_PREFIX_PATH}/houses/categories/create`,
+        UPDATE: `${APP_PREFIX_PATH}/houses/categories/:reference/update`,
+    }
+}
+
+export const USER = {
+    SELF: `${APP_PREFIX_PATH}/users`,
+    LESSOR: {
+        SELF: `${APP_PREFIX_PATH}/users/lessors`,
+        LIST: `${APP_PREFIX_PATH}/users/lessors/list`,
     }
 }
