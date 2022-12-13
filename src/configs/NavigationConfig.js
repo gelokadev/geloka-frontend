@@ -1,5 +1,5 @@
 import * as FrontEndUrl from '../constants/FrontendUrl';
-import { DashboardOutlined, LogoutOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LogoutOutlined, AppstoreOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
 
 export const adminNavTree = [{
   key: 'dashboards',
@@ -31,14 +31,14 @@ export const adminNavTree = [{
       breadcrumb: false,
       title: 'Catégories',
       key: 'categories',
-      icon: AppstoreOutlined,
+      icon: TagOutlined,
       path: FrontEndUrl.HOUSE.CATEGORY.LIST,
     },
     {
       breadcrumb: false,
       title: 'Bailleurs',
       key: 'lessors',
-      icon: AppstoreOutlined,
+      icon: TeamOutlined,
       path: FrontEndUrl.USER.LESSOR.LIST,
     },
   ]

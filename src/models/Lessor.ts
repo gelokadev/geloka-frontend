@@ -5,6 +5,7 @@ enum LESSOR_STATUS {
     ACTIVE = "ACTIVE",
     PENDING = "PENDING",
     SUSPENDED = "SUSPENDED",
+    REJECTED = "REJECTED"
 }
 
 export default class Lessor implements ILessor {

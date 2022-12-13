@@ -33,4 +33,20 @@ export default class UserService {
         });
     }
 
+    static changeLessorStatus(reference: string) {
+        return fetch({
+            url: Routes.CHANGE_LESSOR_STATUS(reference),
+            method: 'put',
+            data: {}
+        });
+    }
+
+    static approveLessorRequest(reference: string, data: any) {
+        return fetch({
+            url: Routes.APPROVE_LESSOR_REQUEST(reference),
+            method: 'put',
+            data
+        });
+    }
+
 }
