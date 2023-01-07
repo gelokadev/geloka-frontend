@@ -1,3 +1,5 @@
+import { getFilePath } from "../datas/helper";
+
 enum USER_ROLE {
     ADMIN = "ADMIN",
     USER = "USER",
@@ -6,7 +8,7 @@ enum USER_ROLE {
 }
 
 export default class User implements IUser {
-    avatar: string;
+    avatar: string|undefined;
     createdAt: string;
     email: string;
     firstName: string;
@@ -21,7 +23,7 @@ export default class User implements IUser {
     private role: USER_ROLE
 
     constructor(data: any) {
-        this.avatar = data.avatar;
+        this.avatar = getFilePath(data.avatar);
         this.createdAt = data.createdAt;
         this.email = data.email;
         this.firstName = data.firstName;
@@ -60,7 +62,7 @@ export default class User implements IUser {
 
 export interface IUser {
     isHost: () => boolean;
-    avatar: string;
+    avatar: string|undefined;
     createdAt: string;
     email: string;
     firstName: string;

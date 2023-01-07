@@ -1,5 +1,4 @@
 import User from "./User";
-import { convertDate, getFilePath } from "../datas/helper";
 
 enum LESSOR_STATUS {
     ACTIVE = "ACTIVE",
@@ -8,12 +7,11 @@ enum LESSOR_STATUS {
     REJECTED = "REJECTED"
 }
 
-export default class Lessor implements ILessor {
+export default class LessorLite implements ILessorLite {
 
     id: number;
     email: string;
-    userInfo: User;
-    avatar: string|undefined;
+    avatar: string;
     lastName: string;
     firstName: string;
     reference: string;
@@ -26,27 +24,21 @@ export default class Lessor implements ILessor {
         this.id = data.id;
         this.email = data.email;
         this.status = data.status;
-        this.avatar = getFilePath(data.avatar);
+        this.avatar = data.avatar;
         this.lastName = data.lastName;
         this.cniNumber = data.cniNumber;
         this.firstName = data.firstName
         this.createdAt = data.createdAt;
         this.updatedAt = data.updatedAt;
         this.reference = data.reference;
-        this.userInfo = new User(data.userInfo);
-    }
-
-    getParsedDate() {
-        return convertDate(this.createdAt);
     }
 
 }
 
-export interface ILessor {
+export interface ILessorLite {
     id: number;
     email: string;
-    avatar: string|undefined;
-    userInfo: User;
+    avatar: string;
     lastName: string;
     firstName: string;
     cniNumber: string;

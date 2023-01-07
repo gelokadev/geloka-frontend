@@ -13,6 +13,8 @@ export const AUTH = {
 
 export const HOUSE = {         
     SELF: `${APP_PREFIX_PATH}/houses`,
+    LIST: `${APP_PREFIX_PATH}/houses/list`,
+    DETAILS: `${APP_PREFIX_PATH}/houses/:reference/details`,
     COMMODITY: {
         SELF: `${APP_PREFIX_PATH}/houses/commodities`,
         LIST: `${APP_PREFIX_PATH}/houses/commodities/list`,

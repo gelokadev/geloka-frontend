@@ -27,11 +27,9 @@ export const NavProfile = (props) => {
     <div className="nav-profile nav-dropdown">
       <div className="nav-profile-header">
         <div className="d-flex">
-          <div>
           <Avatar size={30} src={profileImg} />
-          </div>
-          <div className="pl-2">
-            <h4 className="mb-0">{ props.user?.fullName }</h4>
+          <div className="pl-3">
+            <h4 className="mb-0">{ props.user?.getUserName() }</h4>
             <span className="text-muted">{ props.user?.email }</span>
           </div>
         </div>

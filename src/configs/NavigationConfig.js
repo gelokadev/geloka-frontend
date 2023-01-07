@@ -1,5 +1,6 @@
 import * as FrontEndUrl from '../constants/FrontendUrl';
-import { DashboardOutlined, LogoutOutlined, AppstoreOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LogoutOutlined, AppstoreOutlined, 
+  TagOutlined, TeamOutlined, HomeOutlined } from '@ant-design/icons';
 
 export const adminNavTree = [{
   key: 'dashboards',
@@ -40,6 +41,13 @@ export const adminNavTree = [{
       key: 'lessors',
       icon: TeamOutlined,
       path: FrontEndUrl.USER.LESSOR.LIST,
+    },
+    {
+      breadcrumb: false,
+      title: 'Logements',
+      key: 'houses',
+      icon: HomeOutlined,
+      path: FrontEndUrl.HOUSE.LIST,
     },
   ]
 }, {
