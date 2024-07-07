@@ -1,6 +1,6 @@
 const dev = {
-//   API_ENDPOINT_URL: 'http://localhost:8090'
-  API_ENDPOINT_URL: 'http://178.238.225.128:8090'
+//   API_ENDPOINT_URL: 'http://localhost:8080'
+  API_ENDPOINT_URL: 'https://api.geloka.com'
 };
 
 const getEnv = () => {

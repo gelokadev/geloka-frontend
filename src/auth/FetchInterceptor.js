@@ -24,30 +24,24 @@ service.interceptors.request.use(config => {
 		config.headers[TOKEN_PAYLOAD_KEY] = 'Bearer ' + accessToken
 	}
 
-	if (config.multipart) {
+	if (config.data?.files) {
 		config.headers['content-type'] = 'multipart/form-data';
 	 }
 
 	if ((config.method === 'post' || config.method === 'put')) {
-		// Create an object to store file data
-		const fileData = {};
 
-		// Check if fileData is present
-		if (config.fileData) {
-			config.fileData.forEach(f => {
-				fileData[f] = config.data[f];
-				delete config.data[f];
-			});
-		}
-
+		const files = config.data.files;
+		console.log(config.data);
+		delete config.data.files;
+		
 		config.data = Utils.objectToFormData(config.data);
-
-		// Append files to data to send
-		if (config.fileData) {
-			Object.entries(fileData).forEach(item => {
-				config.data.append(item[0], item[1]);
+		
+		if (files) {
+			files.forEach(item => {
+				config.data.append(item.name, item.file);
 			});
 		}
+		
 	}
 
   return config

@@ -91,6 +91,22 @@ export default class House implements IHouse {
                 return 'par jour';
         }
     }
+
+    getAccessibilities() {
+        return this.accessibilities.map(a => this.getAccessibilityLabel(a)).join(', ');
+    }
+
+    getAccessibilityLabel(accessibility: ACCESSIBILITY) {
+        switch (accessibility) {
+            case ACCESSIBILITY.CAR:
+                return 'par voiture'
+            case ACCESSIBILITY.MOTOCYCLE:
+                return 'par moto'
+            case ACCESSIBILITY.FOOT:
+                return 'à pieds';
+        }
+    }
+
 }
 
 export interface IHouse {

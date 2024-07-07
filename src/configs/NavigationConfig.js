@@ -1,6 +1,6 @@
 import * as FrontEndUrl from '../constants/FrontendUrl';
 import { DashboardOutlined, LogoutOutlined, AppstoreOutlined, 
-  TagOutlined, TeamOutlined, HomeOutlined } from '@ant-design/icons';
+  TagOutlined, TeamOutlined, HomeOutlined, EnvironmentOutlined } from '@ant-design/icons';
 
 export const adminNavTree = [{
   key: 'dashboards',
@@ -48,6 +48,13 @@ export const adminNavTree = [{
       key: 'houses',
       icon: HomeOutlined,
       path: FrontEndUrl.HOUSE.LIST,
+    },
+    {
+      breadcrumb: false,
+      title: 'Lieux populaires',
+      key: 'popular-places',
+      icon: EnvironmentOutlined,
+      path: FrontEndUrl.POPULAR_PLACE.CITY.LIST,
     },
   ]
 }, {

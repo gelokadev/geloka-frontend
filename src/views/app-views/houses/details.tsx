@@ -80,17 +80,19 @@ export const Details = () => {
 			</PageHeaderAlt>	
 			<Card>
 				<div className="table-responsive container-fluid">
-                    <MasonryImages />
+                    <MasonryImages medias={house?.medias ?? []} />
                     <div className='d-flex justify-content-between mt-2 row'>
                         <div>
                             <h1><b>{house?.title}</b></h1>
-                            <span>{house?.category.title}</span> &nbsp; &#x2022; &nbsp;
-                            <span>{house?.lounges} salons</span> &nbsp; &#x2022; &nbsp;
-                            <span>{house?.rooms} chambres </span> &nbsp; &#x2022; &nbsp;
-                            <span>{house?.baths} douches</span>
+                            <span>Catégorie: {house?.category.title}</span> &nbsp; &#x2022; &nbsp;
+                            <span>Salon: {house?.lounges}</span> &nbsp; &#x2022; &nbsp;
+                            <span>Chambre: {house?.rooms} </span> &nbsp; &#x2022; &nbsp;
+                            <span>Cuisine: {house?.kitchens} </span> &nbsp; &#x2022; &nbsp;
+                            <span>Douche: {house?.baths}</span><br />
+							<span className='mt-5'>Accessible {house?.getAccessibilities()}</span>
                         </div>
                         <div>
-                            <p>Proposé par</p> <p>{house?.lessor?.firstName+' '+house?.lessor?.lastName}</p>
+                            <p>{house?.lessor?.firstName+' '+house?.lessor?.lastName}</p>
                         </div>
                     </div>
 
@@ -98,16 +100,25 @@ export const Details = () => {
 						<Col xs={24} sm={24} md={18}>
                             <p>{house?.description}</p>
                         </Col>
-                        <Col xs={24} sm={24} md={6}>
-							<h2 className='text-right'><b>{house?.getPriceRange()}</b></h2>
+                        <Col xs={24} sm={24} md={6} className='pl-10'>
+							<h2><b>{house?.getPriceRange()}</b></h2>
+							<Button
+								danger
+								type="primary"
+								onClick={() => {
+									window.open(`https://maps.google.com/?q=${house?.coordinate.latitude},${house?.coordinate.longitude}`, '_blank')
+								}}
+							>
+								Voir sur la carte
+							</Button>
                         </Col>
                     </Row>
 
 					<Row gutter={16} className="mt-3">
-						<Col xs={24} sm={24} md={18}>
+						{/* <Col xs={24} sm={24} md={18}>
 							<span><StarOutlined /> {house?.stars} étoiles</span> &nbsp; &#x2022; &nbsp;
 							<span><MessageOutlined /> {house?.commentCount} commentaires</span>
-                        </Col>
+                        </Col> */}
                         <Col xs={24} sm={24} md={6} className='d-flex'>
 							<Button
 								danger

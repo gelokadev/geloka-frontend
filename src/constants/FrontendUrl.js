@@ -42,3 +42,13 @@ export const USER = {
         LIST: `${APP_PREFIX_PATH}/users/lessors/list`,
     }
 }
+
+export const POPULAR_PLACE = {
+    SELF: `${APP_PREFIX_PATH}/popular-places`,
+    CITY: {
+        SELF: `${APP_PREFIX_PATH}/popular-places/cities`,
+        LIST: `${APP_PREFIX_PATH}/popular-places/cities/list`,
+        CREATE: `${APP_PREFIX_PATH}/popular-places/cities/create`,
+        UPDATE: `${APP_PREFIX_PATH}/popular-places/cities/:reference/update`,
+    }
+}

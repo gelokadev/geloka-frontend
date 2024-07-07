@@ -10,6 +10,7 @@ export const AppViews = () => {
       <Switch>
         <Route path={FrontUrl.HOME} component={lazy(() => import(`./home`))} />
         <Route path={FrontUrl.HOUSE.SELF} component={lazy(() => import(`./houses`))} />
+        <Route path={FrontUrl.POPULAR_PLACE.SELF} component={lazy(() => import(`./places`))} />
         <Route path={FrontUrl.USER.SELF} component={lazy(() => import(`./users`))} />
         <Redirect from={`${APP_PREFIX_PATH}`} to={FrontUrl.HOME} />
       </Switch>
