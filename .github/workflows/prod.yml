@@ -31,7 +31,7 @@ jobs:
           context: .
           file: ./deployments/prod/Dockerfile
           push: true
-          tags: ghcr.io/descartes310/geloka-dashboard-prod:latest
+          tags: ghcr.io/gelokadev/geloka-dashboard-prod:latest
 
       - name: Install sshpass
         run: sudo apt-get install sshpass
