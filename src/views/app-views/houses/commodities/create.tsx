@@ -1,15 +1,15 @@
 
 import { injectIntl } from 'react-intl';
-import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import allIconsPack from '../../../../datas/icons';
+import Icons from '../../../../datas/icons.json';
+import React, { useEffect, useState } from 'react';
 import { HOUSE } from '../../../../constants/FrontendUrl';
 import Flex from '../../../../components/shared-components/Flex';
 import { Input, Select, Row, Col, Card, Form, message } from 'antd';
 import CommodityService from '../../../../services/houses/commodities';
 import GKButton from "../../../../components/shared-components/GKButton";
-import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 import CommodityCategory from '../../../../models/house/CommodityCategory';
+import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 
 const { Option, OptGroup } = Select
 
@@ -48,6 +48,7 @@ const Create = (props: any) => {
 	const [categories, setCategories] = useState<CommodityCategory[]>([]);
 
 	useEffect(() => {
+		console.log(Icons.icons)
     	getCategories();
   	}, []);
 
@@ -99,17 +100,24 @@ const Create = (props: any) => {
 							</Form.Item>
 							<Form.Item name="icon" label={'Icône de la commodité'} rules={rules.icon}>
 								<Select
+									showSearch
 									className="w-100"
+									filterOption={(input, option) => {
+										return option?.props.value.toLowerCase().includes(input.toLowerCase())
+									}}
 									placeholder={'Icône de la commodité'}
 								>
-									{ allIconsPack.map((iconPack: any, index) => (
-										<OptGroup key={index} label={iconPack.title}>
-											{ iconPack.icons.map((icon: any, i: number) => (
-												<Option key={i} value={icon}>
-													<div className={`glyph-icon ${icon}`} />
-												</Option>
-											))}
-										</OptGroup>
+									{ Icons.icons.map((icon: any, index: number) => (
+										<Option key={index} value={icon.properties.name}>
+											<div className='d-flex flex-row'>
+												<svg width="30" height="30" viewBox="0 0 1200 1200">
+													{icon.icon.paths.map((path: string, i: number) => (
+														<path key={i} d={path}></path>
+													))}
+												</svg>
+												&nbsp;&nbsp;{icon.properties.name}
+											</div>
+										</Option>
 									))}
 								</Select>
 							</Form.Item>

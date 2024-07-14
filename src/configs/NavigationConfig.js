@@ -51,10 +51,17 @@ export const adminNavTree = [{
     },
     {
       breadcrumb: false,
+      title: 'Villes populaires',
+      key: 'popular-cities',
+      icon: EnvironmentOutlined,
+      path: FrontEndUrl.POPULAR_PLACE.CITY.LIST,
+    },
+    {
+      breadcrumb: false,
       title: 'Lieux populaires',
       key: 'popular-places',
       icon: EnvironmentOutlined,
-      path: FrontEndUrl.POPULAR_PLACE.CITY.LIST,
+      path: FrontEndUrl.POPULAR_PLACE.POINT.LIST,
     },
   ]
 }, {

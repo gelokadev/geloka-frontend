@@ -31,7 +31,6 @@ service.interceptors.request.use(config => {
 	if ((config.method === 'post' || config.method === 'put')) {
 
 		const files = config.data.files;
-		console.log(config.data);
 		delete config.data.files;
 		
 		config.data = Utils.objectToFormData(config.data);

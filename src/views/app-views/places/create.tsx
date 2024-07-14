@@ -13,11 +13,12 @@ import type { UploadProps } from 'antd/es/upload/interface';
 import Country from '../../../models/Country';
 import City from '../../../models/City';
 import PlaceService from '../../../services/places';
+import { PopularPlaceType } from '../../../models/PopularPlace';
 const { Option } = Select;
 
 const { Dragger } = Upload;
 
-const Create = () => {
+const Create = ({type}: {type: PopularPlaceType}) => {
 
 	const imageUploadProps: UploadProps = {
 		name: 'file',
@@ -66,6 +67,18 @@ const Create = () => {
 				required: true,
 				message: 'Le rayon est obligatoire',
 			}
+		],
+		longitude: [
+			{
+				required: true,
+				message: 'La longitude est obligatoire',
+			}
+		],
+		latitude: [
+			{
+				required: true,
+				message: 'La latitude est obligatoire',
+			}
 		]
 	}
 
@@ -109,8 +122,8 @@ const Create = () => {
 	const onFinish = () => {
 		setSubmitLoading(true)
 		form.validateFields().then(values => {
-			PlaceService.createPopular({...values, files: [{file: image, name: 'image'}]}).then(() => {
-				history.push(POPULAR_PLACE.CITY.LIST);
+			PlaceService.createPopular({...values, type, files: [{file: image, name: 'image'}]}).then(() => {
+				history.push(type === PopularPlaceType.CITY ? POPULAR_PLACE.CITY.LIST : POPULAR_PLACE.POINT.LIST);
 			}).finally(() => {
 				setSubmitLoading(false);
 			})
@@ -134,7 +147,7 @@ const Create = () => {
 		<React.Fragment>
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
-					<h2>Créer une ville populaire</h2>
+					<h2>{type === PopularPlaceType.CITY ? 'Créer une ville populaire' : 'Créer un lieu populaire' }</h2>
 				</Flex>
 			</PageHeaderAlt>
 			<Form
@@ -184,9 +197,20 @@ const Create = () => {
 									</Select>
 								</Form.Item>
 							)}
-							<Form.Item name="radius" label={'Rayon (en KM)'} rules={rules.radius}>
-								<Input type='number' placeholder={'Rayon (en KM)'} />
-							</Form.Item>
+							{ type === PopularPlaceType.CITY ? (
+								<Form.Item name="radius" label={'Rayon (en KM)'} rules={rules.radius}>
+									<Input type='number' placeholder={'Rayon (en KM)'} />
+								</Form.Item>
+							) : (
+								<>
+									<Form.Item name="longitude" label={'Longitude'} rules={rules.longitude}>
+										<Input type='number' placeholder={'Longitude'} />
+									</Form.Item>
+									<Form.Item name="latitude" label={'Latitude'} rules={rules.latitude}>
+										<Input type='number' placeholder={'Latitude'} />
+									</Form.Item>
+								</>
+							)}
 							<Dragger {...imageUploadProps} beforeUpload={beforeUpload}>
 								{
 									image ? 
@@ -218,4 +242,4 @@ const Create = () => {
 	)
 }
 
-export default injectIntl(Create);
+export default Create;

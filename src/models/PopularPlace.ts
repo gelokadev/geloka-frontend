@@ -2,8 +2,9 @@ import { convertDate, getFilePath } from "../datas/helper";
 import Coordinate from "./Coordinate";
 
 
-enum TYPE {
-    CITY = "CITY"
+export const enum PopularPlaceType {
+    CITY = "CITY",
+    POINT = "POINT",
 }
 
 export default class PopularPlace implements IPopularPlace {
@@ -12,21 +13,21 @@ export default class PopularPlace implements IPopularPlace {
     name: string;
     description: string;
     image?: string;
-    radius: number;
+    radius?: number;
     coordinate: Coordinate;
     status: boolean;
     createdAt: string;
     cityId: number;
     country: string;
-    type: TYPE;
+    type: PopularPlaceType;
 
 
     constructor(data: any) {
         this.id = data.reference;
         this.name = data.name;
         this.description = data.description;
-        this.radius = data.radius;
-        this.coordinate = new Coordinate(data.position);
+        this.radius = data?.radius;
+        this.coordinate = new Coordinate(data.coordinate);
         this.image = getFilePath(data.image);
         this.createdAt = data.createdAt;
         this.type = data.type;
@@ -47,9 +48,9 @@ export interface IPopularPlace {
     description: string;
     status: boolean;
     image?: string;
-    radius: number;
+    radius?: number;
     coordinate: Coordinate;
-    type: TYPE;
+    type: PopularPlaceType;
     cityId?: number;
     country?: string;
     getParsedDate: (date: string) => string;

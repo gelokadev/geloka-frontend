@@ -1,23 +1,23 @@
 
-import React, { useEffect, useState } from 'react';
-import { injectIntl } from 'react-intl';
-import { useHistory, useParams } from 'react-router-dom';
-import { HOUSE, POPULAR_PLACE } from '../../../constants/FrontendUrl';
-import Flex from '../../../components/shared-components/Flex';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Input, Upload, Row, Col, Card, Form, message, Select } from 'antd';
-import HouseCategoryService from '../../../services/houses/category';
-import GKButton from "../../../components/shared-components/GKButton";
-import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt';
-import type { UploadProps } from 'antd/es/upload/interface';
-import Country from '../../../models/Country';
 import City from '../../../models/City';
+import { injectIntl } from 'react-intl';
+import Country from '../../../models/Country';
+import React, { useEffect, useState } from 'react';
 import PlaceService from '../../../services/places';
+import { LoadingOutlined } from '@ant-design/icons';
+import { useHistory, useParams } from 'react-router-dom';
+import type { UploadProps } from 'antd/es/upload/interface';
+import Flex from '../../../components/shared-components/Flex';
+import { POPULAR_PLACE } from '../../../constants/FrontendUrl';
+import { PopularPlaceType } from '../../../models/PopularPlace';
+import GKButton from "../../../components/shared-components/GKButton";
+import { Input, Upload, Row, Col, Card, Form, message, Select } from 'antd';
+import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt';
 const { Option } = Select;
 
 const { Dragger } = Upload;
 
-const Update = () => {
+const Update = ({type}: {type: PopularPlaceType}) => {
 
 	const imageUploadProps: UploadProps = {
 		name: 'file',
@@ -66,6 +66,18 @@ const Update = () => {
 				required: true,
 				message: 'Le rayon est obligatoire',
 			}
+		],
+		longitude: [
+			{
+				required: true,
+				message: 'La longitude est obligatoire',
+			}
+		],
+		latitude: [
+			{
+				required: true,
+				message: 'La latitude est obligatoire',
+			}
 		]
 	}
 
@@ -92,16 +104,19 @@ const Update = () => {
 
 	  const findData = () => {
 		PlaceService.findPopular(reference).then((response) => {
+			console.log(response.data)
 			form.setFieldsValue({
 				name: response.data.name,
 				radius: response.data.radius,
+				longitude: response.data.coordinate.longitude,
+				latitude: response.data.coordinate.latitude,
 				city_id: response.data.cityId,
 				country: response.data.country,
 				description: response.data.description
 			});
 			setCountry(response.data.country);
-		}).catch(() => {
-			history.push(POPULAR_PLACE.CITY.LIST);
+		}).catch((error) => {
+			history.push(type === PopularPlaceType.CITY ? POPULAR_PLACE.CITY.LIST : POPULAR_PLACE.POINT.LIST);
 		})
 	};
 
@@ -127,7 +142,7 @@ const Update = () => {
 		setSubmitLoading(true)
 		form.validateFields().then(values => {
 			PlaceService.updatePopular(reference, {...values, files: image ? [{file: image, name: 'image'}] : []}).then(() => {
-				history.push(POPULAR_PLACE.CITY.LIST);
+				history.push(type === PopularPlaceType.CITY ? POPULAR_PLACE.CITY.LIST : POPULAR_PLACE.POINT.LIST);
 			}).finally(() => {
 				setSubmitLoading(false);
 			})
@@ -151,7 +166,7 @@ const Update = () => {
 		<React.Fragment>
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
-					<h2>Créer une ville populaire</h2>
+					<h2>{type === PopularPlaceType.CITY ? 'Editer la ville' : 'Editer le lieu' }</h2>
 				</Flex>
 			</PageHeaderAlt>
 			<Form
@@ -201,9 +216,20 @@ const Update = () => {
 									</Select>
 								</Form.Item>
 							)}
-							<Form.Item name="radius" label={'Rayon (en KM)'} rules={rules.radius}>
-								<Input type='number' placeholder={'Rayon (en KM)'} />
-							</Form.Item>
+							{ type === PopularPlaceType.CITY ? (
+								<Form.Item name="radius" label={'Rayon (en KM)'} rules={rules.radius}>
+									<Input type='number' placeholder={'Rayon (en KM)'} />
+								</Form.Item>
+							) : (
+								<>
+									<Form.Item name="longitude" label={'Longitude'} rules={rules.longitude}>
+										<Input type='number' placeholder={'Longitude'} />
+									</Form.Item>
+									<Form.Item name="latitude" label={'Latitude'} rules={rules.latitude}>
+										<Input type='number' placeholder={'Latitude'} />
+									</Form.Item>
+								</>
+							)}
 							<Dragger {...imageUploadProps} beforeUpload={beforeUpload}>
 								{
 									image ? 
@@ -235,4 +261,4 @@ const Update = () => {
 	)
 }
 
-export default injectIntl(Update);
+export default Update;

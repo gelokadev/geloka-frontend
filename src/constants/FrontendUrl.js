@@ -50,5 +50,11 @@ export const POPULAR_PLACE = {
         LIST: `${APP_PREFIX_PATH}/popular-places/cities/list`,
         CREATE: `${APP_PREFIX_PATH}/popular-places/cities/create`,
         UPDATE: `${APP_PREFIX_PATH}/popular-places/cities/:reference/update`,
+    },
+    POINT: {
+        SELF: `${APP_PREFIX_PATH}/popular-places/points`,
+        LIST: `${APP_PREFIX_PATH}/popular-places/points/list`,
+        CREATE: `${APP_PREFIX_PATH}/popular-places/points/create`,
+        UPDATE: `${APP_PREFIX_PATH}/popular-places/points/:reference/update`,
     }
 }

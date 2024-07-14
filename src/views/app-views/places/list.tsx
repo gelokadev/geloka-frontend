@@ -2,13 +2,13 @@ import { useHistory } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import PlaceService from '../../../services/places';
-import PopularPlace from '../../../models/PopularPlace';
+import PopularPlace, { PopularPlaceType } from '../../../models/PopularPlace';
 import { Card, Input, Table, Button, Switch } from 'antd';
 import Flex from '../../../components/shared-components/Flex';
 import { POPULAR_PLACE } from '../../../constants/FrontendUrl';
 import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt';
 
-export const List = () => {
+export const List = ({type}: {type: PopularPlaceType}) => {
 
 	let history = useHistory();
 
@@ -17,10 +17,10 @@ export const List = () => {
 
   	useEffect(() => {
     	getPlaces();
-  	}, []);
+  	}, [type]);
 
   	const getPlaces = () => {
-    	PlaceService.getPopular().then(response => {
+    	PlaceService.getPopular(type).then(response => {
 			setDatas(response.data.map(elt => new PopularPlace(elt)));
     	}).finally(() => {
 
@@ -84,7 +84,7 @@ export const List = () => {
 					<div className='ml-3'>
 						<Button
 							type="primary"
-							onClick={() => history.push(POPULAR_PLACE.CITY.UPDATE.replace(':reference', elm.id))}
+							onClick={() => history.push(type === PopularPlaceType.CITY ? POPULAR_PLACE.CITY.UPDATE.replace(':reference', elm.id) : POPULAR_PLACE.POINT.UPDATE.replace(':reference', elm.id))}
 						>
 							Editer
 						</Button>
@@ -98,14 +98,14 @@ export const List = () => {
 		<React.Fragment>
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
-					<h2>Lieux populaires</h2>
+					<h2>{type === PopularPlaceType.CITY ? 'Villes populaires' : 'Lieux populaires' }</h2>
 				</Flex>
 			</PageHeaderAlt>	
 			<Card>
 				<Flex alignItems="center" justifyContent="between" mobileFlex={false}>
 					<Flex className="mb-1" mobileFlex={false}>
 						<Button type="primary" onClick={() => {
-							history.push(POPULAR_PLACE.CITY.CREATE);
+							history.push(type === PopularPlaceType.CITY ? POPULAR_PLACE.CITY.CREATE : POPULAR_PLACE.POINT.CREATE);
 						}}>
 							Ajouter une entrée
 						</Button>

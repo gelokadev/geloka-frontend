@@ -1,7 +1,7 @@
 
 import { injectIntl } from 'react-intl';
+import Icons from '../../../../datas/icons.json';
 import React, { useEffect, useState } from 'react';
-import allIconsPack from '../../../../datas/icons';
 import { useHistory, useParams } from 'react-router-dom';
 import { HOUSE } from '../../../../constants/FrontendUrl';
 import Flex from '../../../../components/shared-components/Flex';
@@ -113,19 +113,27 @@ const Update = () => {
 							<Form.Item name="english" label={'Nom en anglais'} rules={rules.english}>
 								<Input placeholder={'Nom par anglais'} />
 							</Form.Item>
+
 							<Form.Item name="icon" label={'Icône de la commodité'} rules={rules.icon}>
 								<Select
+									showSearch
 									className="w-100"
+									filterOption={(input, option) => {
+										return option?.props.value.toLowerCase().includes(input.toLowerCase())
+									}}
 									placeholder={'Icône de la commodité'}
 								>
-									{ allIconsPack.map((iconPack: any, index) => (
-										<OptGroup key={index} label={iconPack.title}>
-											{ iconPack.icons.map((icon: any, i: number) => (
-												<Option key={i} value={icon}>
-													<div className={`glyph-icon ${icon}`} />
-												</Option>
-											))}
-										</OptGroup>
+									{ Icons.icons.map((icon: any, index: number) => (
+										<Option key={index} value={icon.properties.name}>
+											<div className='d-flex flex-row align-items-center'>
+												<svg width="30" height="30" viewBox="0 0 1200 1200">
+													{icon.icon.paths.map((path: string, i: number) => (
+														<path key={i} d={path}></path>
+													))}
+												</svg>
+												&nbsp;&nbsp;{icon.properties.name}
+											</div>
+										</Option>
 									))}
 								</Select>
 							</Form.Item>

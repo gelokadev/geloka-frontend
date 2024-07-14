@@ -1,7 +1,7 @@
 import * as Routes from "./routes";
 import { AxiosPromise } from "axios";
 import fetch from '../../auth/FetchInterceptor';
-import PopularPlace from "../../models/PopularPlace";
+import PopularPlace, { PopularPlaceType } from "../../models/PopularPlace";
 import Country from "../../models/Country";
 import City from "../../models/City";
 
@@ -22,8 +22,9 @@ export default class PlaceService {
         });
     }
 
-    static getPopular(): AxiosPromise<PopularPlace[]> {
+    static getPopular(type: PopularPlaceType): AxiosPromise<PopularPlace[]> {
         return fetch({
+            params: {type},
             url: Routes.GET_POPULAR_PLACES,
             method: 'get'
         });
