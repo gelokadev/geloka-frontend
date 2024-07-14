@@ -9,6 +9,13 @@ enum ACCESSIBILITY {
     MOTOCYCLE = "MOTOCYCLE",
 }
 
+export const enum HouseStatus {
+    PENDING = "PENDING",
+    RUNNING = "RUNNING",
+    SUSPENDED = "SUSPENDED",
+    DISABLED = "DISABLED",
+}
+
 enum PAYMENT_FREQUENCE {
     NIGHTLY = "NIGHTLY",
     DAILY = "DAILY",
@@ -28,6 +35,7 @@ export default class House implements IHouse {
     isModern: boolean;
     coordinate: Coordinate;
     category: HouseCategory;
+    status: HouseStatus;
     accessibilities: ACCESSIBILITY[];
     stars: number;
     enabled: boolean;
@@ -58,6 +66,7 @@ export default class House implements IHouse {
         this.title = data.title;
         this.image = getFilePath(data.image);
         this.description = data.description;
+        this.status = data.status;
         this.coordinate = new Coordinate(data.coordinate);
         this.category = new HouseCategory(data.category);
         this.lessor = data.owner ? new LessorLite(data.owner) : null;
@@ -119,6 +128,7 @@ export interface IHouse {
     enabled: boolean;
     isModern: boolean;
     coordinate: Coordinate;
+    status: HouseStatus;
     category: HouseCategory;
     accessibilities: ACCESSIBILITY[];
     stars: number;

@@ -1,34 +1,21 @@
-import House from '../../../models/house/House';
+import { Card, Row, Col, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { HOUSE } from '../../../constants/FrontendUrl';
 import { useHistory, useParams } from 'react-router-dom';
 import HouseService from '../../../services/houses/self';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import { NotificationPlacement } from 'antd/lib/notification';
 import Flex from '../../../components/shared-components/Flex';
-import { MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Card, notification, Row, Col, Button, Modal } from 'antd';
+import ChangeStatusModal from './components/changeStatusModal';
+import House, { HouseStatus } from '../../../models/house/House';
 import MasonryImages from '../../../components/util-components/MasonryImages';
 import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt';
-
-const { confirm } = Modal;
-
 
 export const Details = () => {
 
     let history = useHistory();
     const { reference }: any = useParams();
 	const [house, setHouse] = useState<House | null>(null);
-	const [api, contextHolder] = notification.useNotification();
-
-	const openNotification = (placement: NotificationPlacement) => {
-	  api.error({
-		message: `Une erreur est survenue`,
-		description:
-		  'La raison du refus est obligatoire, veuillez la compléter!',
-		placement,
-	  });
-	};
+	const [isSuspension, setIsSuspension] = useState<boolean>(false);
+	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 
   	useEffect(() => {
     	getHouse();
@@ -36,43 +23,25 @@ export const Details = () => {
 
   	const getHouse = () => {
     	HouseService.findHouse(reference).then(response => {
-            console.log(response.data);
-            console.log(new House(response.data));
 			setHouse(new House(response.data));
-    	}).catch((err) => {
-            console.log(err);
+    	}).catch(() => {
             history.push(HOUSE.LIST);
         });
   	};
 
-	const validateHouse = (status: boolean) => {
-    	HouseService.validateHouse(reference, {status, reason: null}).then(response => {
-            console.log(response.data);
-            console.log(new House(response.data));
-			setHouse(new House(response.data));
-    	}).catch((err) => {
-            console.log(err);
+	const validateHouse = (reason: string) => {
+    	HouseService.validateHouse(reference, {status: !isSuspension, reason}).then(response => {
+			getHouse();
+    	}).catch(() => {
             history.push(HOUSE.LIST);
-        });
-  	};
-
-	const showConfirmStatusChanging = (status: boolean) => {
-		confirm({
-		  	title: status ? 'Voulez-vous vraiment activer ce logement?' : 'Voulez-vous vraiment suspendre ce logement?',
-		  	icon: <ExclamationCircleFilled />,
-		  	content: 'Changement du status du logement',
-		  	okText: 'Valider',
-    		cancelText: 'Annuler',
-		  	onOk() {
-				validateHouse(status);
-		  	},
-		  	onCancel() {},
+        }).finally(() => {
+			setShowStatusModal(false);
+			setIsSuspension(false);
 		});
-	};
+  	};
 
   	return (
 		<React.Fragment>
-			{contextHolder}
 			<PageHeaderAlt className="border-bottom">
 				<Flex className="py-2" mobileFlex={false}>
 					<h2>Details de logements</h2>
@@ -120,26 +89,43 @@ export const Details = () => {
 							<span><MessageOutlined /> {house?.commentCount} commentaires</span>
                         </Col> */}
                         <Col xs={24} sm={24} md={6} className='d-flex'>
-							<Button
-								danger
-								type="primary"
-								onClick={() => {
-									showConfirmStatusChanging(false);
-								}}
-							>
-								Suspendre le logement
-							</Button>
-							<Button
-								type="primary"
-								className='ml-1'
-								onClick={() => {
-									showConfirmStatusChanging(true);
-								}}
-							>
-								Activer le logement
-							</Button>
+							{ house != null && [HouseStatus.PENDING, HouseStatus.RUNNING].includes(house?.status) && (
+								<Button
+									danger
+									type="primary"
+									onClick={() => {
+										setIsSuspension(true);
+										setShowStatusModal(true);
+									}}
+								>
+									Suspendre le logement
+								</Button>
+							)}
+							{ house != null && [HouseStatus.PENDING, HouseStatus.SUSPENDED].includes(house?.status) && (
+								<Button
+									type="primary"
+									className='ml-1'
+									onClick={() => {
+										setIsSuspension(false);
+										setShowStatusModal(true);
+									}}
+								>
+									Activer le logement
+								</Button>
+							)}
                         </Col>
                     </Row>
+
+					{house != null && showStatusModal && (
+						<ChangeStatusModal
+							visible={showStatusModal}
+							status={!isSuspension}
+							handleOk={(reason: string | null) => {
+								validateHouse(reason ?? "Pas de raison spécifiée");
+							}}
+							handleCancel={() => setShowStatusModal(false)}
+						/>
+					)}
 				</div>
 			</Card>
 		</React.Fragment>	

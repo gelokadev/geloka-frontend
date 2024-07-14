@@ -9,6 +9,7 @@ import RejectRequestModal from './components/rejectRequestModal';
 import Flex from '../../../../components/shared-components/Flex';
 import { Card, Input, Table, Button, Modal, notification } from 'antd';
 import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
+import ChangeStatusModal from './components/changeStatusModal';
 
 const { confirm } = Modal;
 
@@ -16,7 +17,9 @@ export const List = () => {
 
 	const [search, setSearch] = useState<String>('');
 	const [datas, setDatas] = useState<Lessor[]>([]);
+	const [isSuspension, setIsSuspension] = useState<boolean>(false);
 	const [showRejectModal, setShowRejectModal] = useState<boolean>(false);
+	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [selectedLessor, setSelectedLessor] = useState<Lessor|null>(null);
 
 	const [api, contextHolder] = notification.useNotification();
@@ -61,10 +64,9 @@ export const List = () => {
     	});
   	};
 		
-  	const changeLessorstatus = (lessor: Lessor) => {
-		console.log(lessor);
+  	const changeLessorstatus = (lessor: Lessor, reason: string) => {
 		if(lessor === null) return;
-    	UserService.changeLessorStatus(lessor?.reference).then(() => {
+    	UserService.changeLessorStatus(lessor?.reference, reason).then(() => {
 			getLessors();
     	}).finally(() => {
 			setSelectedLessor(null);
@@ -171,7 +173,9 @@ export const List = () => {
 								danger
 								type="primary"
 								onClick={() => {
-									showConfirmStatusChanging(false, elm);
+									setIsSuspension(true);
+									setSelectedLessor(elm);
+									setShowStatusModal(true);
 								}}
 							>
 								Suspendre
@@ -183,7 +187,9 @@ export const List = () => {
 							<Button
 								type="primary"
 								onClick={() => {
-									showConfirmStatusChanging(true, elm);
+									setIsSuspension(false);
+									setSelectedLessor(elm);
+									setShowStatusModal(true);
 								}}
 							>
 								Activer
@@ -204,20 +210,6 @@ export const List = () => {
     		cancelText: 'Annuler',
 		  	onOk() {
 				approveLessorRequest(status, null);
-		  	},
-		  	onCancel() {},
-		});
-	};
-
-	const showConfirmStatusChanging = (status: boolean, lessor: Lessor) => {
-		confirm({
-		  	title: status ? 'Voulez-vous vraiment activer ce bailleur?' : 'Voulez-vous vraiment suspendre ce bailleur?',
-		  	icon: <ExclamationCircleFilled />,
-		  	content: 'Changement du status du bailleur',
-		  	okText: 'Valider',
-    		cancelText: 'Annuler',
-		  	onOk() {
-				changeLessorstatus(lessor);
 		  	},
 		  	onCancel() {},
 		});
@@ -247,9 +239,24 @@ export const List = () => {
 					/>
 				</div>
 			</Card>
-			<RejectRequestModal visible={showRejectModal} handleOk={(reason: string | null) => {
-				approveLessorRequest(false, reason);
-			}}  handleCancel={() => setShowRejectModal(false)} />
+			<RejectRequestModal
+				visible={showRejectModal}
+				handleOk={(reason: string | null) => {
+					approveLessorRequest(false, reason);
+				}}
+				handleCancel={() => setShowRejectModal(false)}
+			/>
+			{selectedLessor && showStatusModal && (
+				<ChangeStatusModal
+					visible={showStatusModal}
+					status={!isSuspension}
+					handleOk={(reason: string | null) => {
+						changeLessorstatus(selectedLessor, reason ?? "Pas de raison spécifiée");
+					}}
+					handleCancel={() => setShowStatusModal(false)}
+				/>
+			)}
+			
 		</React.Fragment>	
   	)
 }

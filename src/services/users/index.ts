@@ -33,11 +33,11 @@ export default class UserService {
         });
     }
 
-    static changeLessorStatus(reference: string) {
+    static changeLessorStatus(reference: string, reason: string) {
         return fetch({
             url: Routes.CHANGE_LESSOR_STATUS(reference),
             method: 'put',
-            data: {}
+            data: {reason}
         });
     }
 
