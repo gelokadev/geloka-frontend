@@ -1,12 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-import { injectIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
-import { HOUSE, POPULAR_PLACE } from '../../../constants/FrontendUrl';
+import { POPULAR_PLACE } from '../../../constants/FrontendUrl';
 import Flex from '../../../components/shared-components/Flex';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Input, Upload, Row, Col, Card, Form, message, Select } from 'antd';
-import HouseCategoryService from '../../../services/houses/category';
 import GKButton from "../../../components/shared-components/GKButton";
 import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt';
 import type { UploadProps } from 'antd/es/upload/interface';

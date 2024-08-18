@@ -43,6 +43,13 @@ export const USER = {
     }
 }
 
+export const ONBOARDING = {
+    SELF: `${APP_PREFIX_PATH}/onboardings`,
+    LIST: `${APP_PREFIX_PATH}/onboardings/list`,
+    CREATE: `${APP_PREFIX_PATH}/onboardings/create`,
+    UPDATE: `${APP_PREFIX_PATH}/onboardings/:reference/update`,
+}
+
 export const POPULAR_PLACE = {
     SELF: `${APP_PREFIX_PATH}/popular-places`,
     CITY: {

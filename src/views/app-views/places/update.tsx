@@ -102,7 +102,7 @@ const Update = ({type}: {type: PopularPlaceType}) => {
 		}
   	}, [country]);
 
-	  const findData = () => {
+	const findData = () => {
 		PlaceService.findPopular(reference).then((response) => {
 			console.log(response.data)
 			form.setFieldsValue({

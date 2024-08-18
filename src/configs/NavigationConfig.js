@@ -1,6 +1,6 @@
 import * as FrontEndUrl from '../constants/FrontendUrl';
 import { DashboardOutlined, LogoutOutlined, AppstoreOutlined, 
-  TagOutlined, TeamOutlined, HomeOutlined, EnvironmentOutlined } from '@ant-design/icons';
+  TagOutlined, TeamOutlined, HomeOutlined, EnvironmentOutlined, FireOutlined } from '@ant-design/icons';
 
 export const adminNavTree = [{
   key: 'dashboards',
@@ -8,6 +8,13 @@ export const adminNavTree = [{
   icon: DashboardOutlined,
   breadcrumb: true,
   submenu: [
+    {
+      breadcrumb: false,
+      title: 'Onboardings',
+      key: 'onboardings',
+      icon: FireOutlined,
+      path: FrontEndUrl.ONBOARDING.LIST,
+    },
     {
       breadcrumb: false,
       key: 'commodities',
