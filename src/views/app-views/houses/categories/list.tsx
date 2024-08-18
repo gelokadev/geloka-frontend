@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import Icons from '../../../../datas/icons.json';
 import { Card, Input, Table, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
@@ -48,6 +49,20 @@ export const List = () => {
 					<div className='ml-3'>
 						<p className='font-weight-bold mb-0' style={{ color: 'black' }}>{elm.description.slice(0, 100)}</p>
 					</div>
+				</div>
+			)
+		},
+		{
+			title: "Icône",
+			dataIndex: 'icon',
+			render: (__: any, elm: HouseCategory) => (
+				<div className='d-flex flex-row align-items-center'>
+					<svg width="30" height="30" viewBox="0 0 1200 1200">
+						{Icons?.icons?.find(i => i.properties.name === elm.icon)?.icon.paths.map((path: string, i: number) => (
+							<path key={i} d={path}></path>
+						))}
+					</svg>
+					&nbsp;&nbsp;{elm.icon}
 				</div>
 			)
 		},

@@ -1,13 +1,16 @@
 
 import { injectIntl } from 'react-intl';
+import Icons from '../../../../datas/icons.json';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { HOUSE } from '../../../../constants/FrontendUrl';
-import { Input, Row, Col, Card, Form, message } from 'antd';
 import Flex from '../../../../components/shared-components/Flex';
+import { Input, Row, Col, Card, Form, message, Select } from 'antd';
 import HouseCategoryService from '../../../../services/houses/category';
 import GKButton from "../../../../components/shared-components/GKButton";
 import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
+
+const { Option } = Select
 
 const Update = () => {
 
@@ -23,7 +26,13 @@ const Update = () => {
 				required: true,
 				message: 'La description est obligatoire',
 			}
-		]
+		],
+		icon: [
+			{
+				required: true,
+				message: "L'icône est obligatoire",
+			}
+		],
 	}
 
 	let history = useHistory();
@@ -38,6 +47,7 @@ const Update = () => {
 	const findData = () => {
 		HouseCategoryService.findCategory(reference).then((response) => {
 			form.setFieldsValue({
+				icon: response.data.icon,
 				title: response.data.title,
 				description: response.data.description
 			});
@@ -80,6 +90,29 @@ const Update = () => {
 							</Form.Item>
 							<Form.Item name="description" label={'Description de la catégorie'} rules={rules.description}>
 								<Input placeholder={'Description de la catégorie'} />
+							</Form.Item>
+							<Form.Item name="icon" label={'Icône de la catégorie'} rules={rules.icon}>
+								<Select
+									showSearch
+									className="w-100"
+									filterOption={(input, option) => {
+										return option?.props.value.toLowerCase().includes(input.toLowerCase())
+									}}
+									placeholder={'Icône de la catégorie'}
+								>
+									{ Icons.icons.map((icon: any, index: number) => (
+										<Option key={index} value={icon.properties.name}>
+											<div className='d-flex flex-row align-items-center'>
+												<svg width="30" height="30" viewBox="0 0 1200 1200">
+													{icon.icon.paths.map((path: string, i: number) => (
+														<path key={i} d={path}></path>
+													))}
+												</svg>
+												&nbsp;&nbsp;{icon.properties.name}
+											</div>
+										</Option>
+									))}
+								</Select>
 							</Form.Item>
 							<div className='d-flex justify-content-end'>
 								<GKButton label='Sauvegarder' type="primary" loading={submitLoading} onClick={() => onFinish()} />

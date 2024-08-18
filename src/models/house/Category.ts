@@ -4,6 +4,7 @@ export default class HouseCategory implements IHouseCategory {
 
     id: number;
     title: string;
+    icon: string;
     image: string;
     reference: string;
     createdAt: string;
@@ -15,6 +16,7 @@ export default class HouseCategory implements IHouseCategory {
         this.id = data.id;
         this.image = data.image;
         this.title = data.title;
+        this.icon = data.icon;
         this.createdAt = data.createdAt;
         this.updatedAt = data.updatedAt;
         this.reference = data.reference;
@@ -29,6 +31,7 @@ export default class HouseCategory implements IHouseCategory {
 
 export interface IHouseCategory {
     id: number;
+    icon: string;
     title: string;
     image: string;
     reference: string;

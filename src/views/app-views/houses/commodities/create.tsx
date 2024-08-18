@@ -11,7 +11,7 @@ import GKButton from "../../../../components/shared-components/GKButton";
 import CommodityCategory from '../../../../models/house/CommodityCategory';
 import PageHeaderAlt from '../../../../components/layout-components/PageHeaderAlt';
 
-const { Option, OptGroup } = Select
+const { Option } = Select
 
 const Create = (props: any) => {
 
